@@ -152,6 +152,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114576889808825066, guid: 53ff3af7972efda4d877952166b23e0a,
+        type: 2}
+      propertyPath: jumpSpeed
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53ff3af7972efda4d877952166b23e0a, type: 2}
   m_IsPrefabParent: 0
@@ -2549,23 +2554,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &720703068 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1284493606320662, guid: 53ff3af7972efda4d877952166b23e0a,
-    type: 2}
-  m_PrefabInternal: {fileID: 159637234}
---- !u!114 &720703069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 720703068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9983a23962a457245bdf7805d73ed9f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runSpeed: 5
 --- !u!1 &1081190210
 GameObject:
   m_ObjectHideFlags: 0
