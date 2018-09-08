@@ -16,12 +16,14 @@ public class Player : MonoBehaviour {
     // Cached component references
     Rigidbody2D myRigidbody;
     Animator myAnimator;
+    Collider2D myCollider;
 
     // Messages & Methods
     void Start ()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider2D>();
 	}
 	
 	// Update is called once per frame
@@ -53,6 +55,12 @@ public class Player : MonoBehaviour {
     // and our fall speed (aka Gravity)
     private void Jump()
     {
+        // If not touching ground, gets out of Jump() Method
+        if (!myCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            return;
+        }
+
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             Vector2 velocityJumpToAdd = new Vector2(0f, jumpSpeed);
