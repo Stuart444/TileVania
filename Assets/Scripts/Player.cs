@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -8,15 +9,16 @@ public class Player : MonoBehaviour {
     // Config
     [SerializeField] float runSpeed = 5f;
     [SerializeField] float jumpSpeed = 5f;
+    [SerializeField] float climbSpeed = 5f;
 
     // State
     bool isAlive = true;
-    bool isJumping = false;
 
     // Cached component references
     Rigidbody2D myRigidbody;
     Animator myAnimator;
     Collider2D myCollider;
+    float gravityScaleAtStart;
 
     // Messages & Methods
     void Start ()
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour {
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         myCollider = GetComponent<Collider2D>();
+        gravityScaleAtStart = myRigidbody.gravityScale;
 	}
 	
 	// Update is called once per frame
@@ -32,6 +35,7 @@ public class Player : MonoBehaviour {
         Run();
         Jump();
         FlipSprite();
+        Climb();
     }
 
     private void Run()
@@ -48,6 +52,24 @@ public class Player : MonoBehaviour {
 
         myAnimator.SetBool("Running", playerHasHorizontalSpeed);
 
+    }
+
+    private void Climb()
+    {
+        if (!myCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        {
+            myAnimator.SetBool("Climbing", false);
+            myRigidbody.gravityScale = gravityScaleAtStart;
+            return;
+        }
+
+        float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
+        Vector2 climbVelocity = new Vector2(myRigidbody.velocity.x, controlThrow * climbSpeed);
+        myRigidbody.velocity = climbVelocity;
+        myRigidbody.gravityScale = 0f;
+
+        bool playerHasVerticalSpeed = Mathf.Abs(myRigidbody.velocity.y) > Mathf.Epsilon;
+        myAnimator.SetBool("Climbing", playerHasVerticalSpeed);
     }
 
     // Project Settings -> Physics 2D and use Gravity Speed 
